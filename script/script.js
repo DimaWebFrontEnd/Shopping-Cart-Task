@@ -218,8 +218,6 @@ function getCartItems() {
 function addProduct (id) {
    let selectedItem = id;
    let search = basket.find((x) => x.id === selectedItem && x.color === color && x.size === size);
-   console.log(size, "size")
-   console.log(color, "color")
   
     if (search === undefined) {
       basket.push({
@@ -231,7 +229,28 @@ function addProduct (id) {
    } else {
       search.item += 1;
    }
-   console.log(basket)
+   
+   getCartItems()
+   cartElements()
+}
+
+function decrementProduct (id) {
+   let selectedItem = id;
+   let search = basket.find((x) => x.id === selectedItem && x.color === color && x.size === size);
+  
+   if (search === undefined) return;
+   else if (search.item === 0) return;
+   else {
+      search.item -= 1;
+   }
+   basket = basket.filter((x) => x.item !== 0);
+   getCartItems()
+   cartElements()
+}
+
+const removeItem = (id) => {
+   let selectedItem = id;
+   basket = basket.filter((x) => x.id !== selectedItem);
    getCartItems()
    cartElements()
 }
@@ -273,7 +292,7 @@ function cartElements() {
 
          return `
             <div class="cart__container">
-               <div class="trash"><i class="bi bi-trash3"></i></div>
+               <div onClick="removeItem(${id})" class="trash"><i class="bi bi-trash3"></i></div>
                <figure>
                   <img src=${img} alt=${name}>
                </figure>
@@ -298,9 +317,9 @@ function cartElements() {
                   <div class="cart__price">
                      <p>Price: ${price} $</p>
                      <div class="cart__price--items">
-                        <p><i class="bi bi-dash-circle"></i></p>
+                        <p><i onClick="decrementProduct(${id})" class="bi bi-dash-circle"></i></p>
                         <p>${item}</p>
-                        <p><i class="bi bi-plus-circle"></i></p>
+                        <p><i onClick="addProduct(${id})" class="bi bi-plus-circle"></i></p>
                      </div>
                   </div>
                </div>
@@ -316,7 +335,8 @@ function cartElements() {
    }
 }
 
-cartElements()
+cartElements();
+
 
 /* Added function .preventDefault() to stop refresh the page on form submit */
 
