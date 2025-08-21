@@ -374,27 +374,73 @@ searchForm.addEventListener("submit", e => e.preventDefault());
 
 const arrows = document.querySelectorAll(".slider i");
 const card = document.querySelector(".product__card");
-//const cardWidth = card.clientWidth;
 const cardWidth = card.scrollWidth;
+let isDragStart = false;
+let isDragging = false;
+let prevPageX;
+let prevScrollLeft;
+let positionDiff;
+
 
 /* Perform actions when the end of scroll is reached */
 carousel.addEventListener("scroll", () => {
+
    if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth) {
       arrows[0].classList.remove("active");
    } else {
       arrows[0].classList.add("active");
    }
-   if (carousel.scrollRight + carousel.clientWidth >= carousel.scrollWidth) {
+
+   if (carousel.scrollLeft === 0) {
       arrows[1].classList.remove("active");
+   } else {
+      arrows[1].classList.add("active");
    }
 })
 
 
 function setScroll(arrow) {
    arrow.addEventListener("click", e => {
-      if (e.target.id === "right") arrows[1].classList.add("active");
       carousel.scrollLeft += e.target.id === "left" ? -cardWidth -22 : cardWidth + 22;
    })
 }
 
 arrows.forEach(setScroll)
+
+const dragStart = (e) => {
+   // updating global variables value on mouse down event
+   isDragStart = true;
+   prevPageX = e.pageX || e.touches[0].pageX;
+   prevScrollLeft = carousel.scrollLeft;
+}
+
+const dragging = (e) => {
+   // scrolling images/carousel to left according to mouse pointer
+   if (!isDragStart) return;
+   e.preventDefault();
+   isDragging = true;
+   //carousel.classList.add("dragging");
+   positionDiff = (e.pageX || e.touches[0].pageX) - prevPageX;
+   carousel.scrollLeft = prevScrollLeft - positionDiff;
+   
+}
+
+const dragStop = () => {
+   isDragStart = false;
+   //carousel.classList.remove("dragging");
+
+   if(!isDragging) return;
+   isDragging = false;
+   
+}
+
+
+carousel.addEventListener("mousedown", dragStart)
+carousel.addEventListener("touchstart", dragStart)
+
+carousel.addEventListener("mousemove", dragging)
+carousel.addEventListener("touchmove", dragging)
+
+carousel.addEventListener("mouseup", dragStop)
+//carousel.addEventListener("mouseleave", dragStop)
+carousel.addEventListener("touchend", dragStop)
