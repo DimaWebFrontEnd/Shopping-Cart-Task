@@ -267,7 +267,7 @@ main {
 /* Nav */
 
 nav {
-   min-width: 300px;
+   min-width: 280px;
    height: 100%;
    border: 1px solid var(--light-gray);
    border-radius: 10px;
@@ -311,7 +311,7 @@ nav {
 
 .filter__products {
    position: absolute;
-   left: 300px;
+   left: 280px;
    top: 40px;
    width: 100%;
    max-width: 800px;
@@ -375,7 +375,7 @@ nav ul:hover .filter__products {
    display: flex;
    overflow-x: hidden;
    scroll-behavior: smooth;
-  
+   scroll-snap-type: x mandatory;
 }
 
 .product__card {

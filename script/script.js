@@ -393,7 +393,7 @@ carousel.addEventListener("scroll", () => {
 function setScroll(arrow) {
    arrow.addEventListener("click", e => {
       if (e.target.id === "right") arrows[1].classList.add("active");
-      carousel.scrollLeft += e.target.id === "left" ? -cardWidth -20 : cardWidth + 20;
+      carousel.scrollLeft += e.target.id === "left" ? -cardWidth -22 : cardWidth + 22;
    })
 }
 
