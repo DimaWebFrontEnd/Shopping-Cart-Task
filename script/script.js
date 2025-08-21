@@ -328,7 +328,7 @@ function cartElements() {
    } else {
       return cart.innerHTML = `
          <div class="no-items">
-            <h2>Empty. Please add any products to buy</h2>
+            <h2>Empty. Please add any products</h2>
          </div>
       `
    }
@@ -353,7 +353,7 @@ function getTotalPrice() {
          </div>
          <div class="total__container">
             <p>Total:</p>
-            <p>${amount}</p> 
+            <p>${amount} $</p> 
          </div>
          
          `
@@ -374,12 +374,25 @@ searchForm.addEventListener("submit", e => e.preventDefault());
 
 const arrows = document.querySelectorAll(".slider i");
 const card = document.querySelector(".product__card");
-const cardWidth = card.clientWidth;
+//const cardWidth = card.clientWidth;
+const cardWidth = card.scrollWidth;
 
+/* Perform actions when the end of scroll is reached */
+carousel.addEventListener("scroll", () => {
+   if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth) {
+      arrows[0].classList.remove("active");
+   } else {
+      arrows[0].classList.add("active");
+   }
+   if (carousel.scrollRight + carousel.clientWidth >= carousel.scrollWidth) {
+      arrows[1].classList.remove("active");
+   }
+})
 
 
 function setScroll(arrow) {
    arrow.addEventListener("click", e => {
+      if (e.target.id === "right") arrows[1].classList.add("active");
       carousel.scrollLeft += e.target.id === "left" ? -cardWidth -20 : cardWidth + 20;
    })
 }
