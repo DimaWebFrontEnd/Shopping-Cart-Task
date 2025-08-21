@@ -1,4 +1,4 @@
-const carousel = document.querySelector(".carousel"); 
+
 
 /* Array With Products */
 
@@ -85,7 +85,7 @@ const products = [
 
 /* Using method .map to add products in carousel */
 
-
+const carousel = document.querySelector(".carousel"); 
 
 carousel.innerHTML = products.map((value) => {
    const {id, name, price, img } = value;
@@ -146,11 +146,6 @@ function setColor(col) {
    color = col
 }
 
-/* function getSizes(n) {
-   const sizesN = n === 0 ? "Small" : n === 1? "Medium": n === 2? "Large": "X-large"
-   return sizesN
-} */
-
 
 
 function addToCartFormPopUp(id) {
@@ -160,9 +155,6 @@ function addToCartFormPopUp(id) {
    popUpContent.innerHTML = addProductArr.map(value => {
       const {id, name, price, img, description, sizes } = value;
       const sizesInHtml = document.querySelectorAll(".sizes__options");
-      /* let getSize = (s) => s
-      let size = getSize
-      let color = 0; */
       
       return `
             <i onClick="closePoUp()" class="bi bi-x-circle"></i>
@@ -230,8 +222,9 @@ function addProduct (id) {
       search.item += 1;
    }
    
-   getCartItems()
-   cartElements()
+   getCartItems();
+   cartElements();
+   getTotalPrice()
 }
 
 function decrementProduct (id) {
@@ -244,15 +237,17 @@ function decrementProduct (id) {
       search.item -= 1;
    }
    basket = basket.filter((x) => x.item !== 0);
-   getCartItems()
-   cartElements()
+   getCartItems();
+   cartElements();
+   getTotalPrice()
 }
 
 const removeItem = (id) => {
    let selectedItem = id;
    basket = basket.filter((x) => x.id !== selectedItem);
-   getCartItems()
-   cartElements()
+   getCartItems();
+   cartElements();
+   getTotalPrice()
 }
 
 /* Shopping Cart Menu */
@@ -260,7 +255,9 @@ const removeItem = (id) => {
 const cartElement = document.querySelector(".cart");
 const shoppingMenu = document.querySelector(".shopping__cart");
 const cart = document.querySelector(".menu__container");
-const closeElement = document.querySelector(".menu i")
+const closeElement = document.querySelector(".menu i");
+const labelElement = document.querySelector(".label");
+
 
 
 window.addEventListener("click", (e) => {
@@ -323,7 +320,9 @@ function cartElements() {
                      </div>
                   </div>
                </div>
+              
             </div>
+             
          `
       }).join(""))
    } else {
@@ -337,6 +336,33 @@ function cartElements() {
 
 cartElements();
 
+function getTotalPrice() {
+   
+   if (basket.length !==0) {
+      const amount = basket.map(x => {
+         let { item, id } = x;
+         let search = products.find((y) => y.id === id) || [];
+         return item * search.price;
+      }).reduce((x, y) => x + y, 0);
+      const total = basket.map((x) => x.item).reduce((x, y) => x + y, 0);
+      labelElement.innerHTML = `
+         <h2>Order Summary</h2>
+         <div class="quantity__container">
+            <p>Quantity:</p>
+            <p>${total}</p>
+         </div>
+         <div class="total__container">
+            <p>Total:</p>
+            <p>${amount}</p> 
+         </div>
+         
+         `
+   } else {
+       labelElement.innerHTML = ``
+   }
+}
+
+getTotalPrice() 
 
 /* Added function .preventDefault() to stop refresh the page on form submit */
 
@@ -355,7 +381,6 @@ const cardWidth = card.clientWidth;
 function setScroll(arrow) {
    arrow.addEventListener("click", e => {
       carousel.scrollLeft += e.target.id === "left" ? -cardWidth -20 : cardWidth + 20;
-      
    })
 }
 
