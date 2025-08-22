@@ -339,7 +339,6 @@ nav ul:hover .filter__products {
    overflow-x: hidden;
 }
 
-
 #left,
 #right {
    position: absolute;
@@ -451,13 +450,18 @@ button:active {
 .pop-up__wrapp {
    width: 100%;
    max-width: 600px;
+   /* height: 320px; */
    background-color: white;
+   border-radius: 20px;
    transition: all 0.3s ease-in-out;
    position: relative;
    padding: 10px;
    margin: 10px;
    display: flex;
+   /* align-items: center; */
 }
+
+
 
 .pop-up__wrapp p {
    font-size: 0.8rem;
@@ -465,24 +469,53 @@ button:active {
 
 .pop-up__wrapp .bi-x-circle {
    position: absolute;
-   top: 0;
+   top: -45px;
    right: 0;
-   padding: 10px;
+   font-size: 1.2rem;
+   padding: 5px;
+   background-color: white;
+   border-radius: 5px;
 }
+
+.pop-up__wrapp figure {
+   width: 100%;
+   height: 100%;
+   background-color: var(--product-card-bg);
+   border-radius: 15px;
+   border: 1px solid var(--light-gray);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.pop-up__wrapp figure img {
+   width: 100%;
+   height: auto;
+   border-radius: 15px;
+   display: block;
+}
+
 
 i:hover {
    cursor: pointer;
    color: var(--theme-color);
 }
 
+
+
 .product__features {
    margin-left: 10px;
    display: flex;
    flex-direction: column;
    justify-content: space-between;
-
+   border-radius: 15px;
+   border: 1px solid var(--light-gray);
+   padding: 10px;
 }
 
+.product__features span {
+   font-weight: bolder;
+}
 /* Sizes in Pop-Up */
 
 .sizes {
@@ -495,7 +528,12 @@ i:hover {
 }
 
 .sizes__options {
+   height: 32px;
+   width: 60px;
    padding: 5px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 .sizes__options.active {
    background-color: var(--theme-color);
@@ -520,9 +558,13 @@ i:hover {
    cursor: pointer;
 }
 
-.pop-up__wrap img {
-   display: block;
+
+
+.product__features--size p:first-child ,
+.product__features--colors p:first-child {
+   margin-bottom: 5px;
 }
+
 /* Prizes */
 
 .prizes {
@@ -791,6 +833,19 @@ footer {
    }
 }
 
+@media screen and (max-width: 600px) {
+
+   /* Main */
+   .pop-up__wrapp {
+   
+      font-size: 0.8rem;
+   }
+   .pop-up__wrapp p {
+     
+      font-size: 0.7rem;
+   }
+}
+
 @media screen and (max-width: 560px) {
 
     /* Body */
@@ -803,8 +858,25 @@ footer {
       padding: 10px;
    }
 
+   /* Main */
    .carousel {
       height: 400px;
+   }
+
+   .pop-up__wrapp {
+      max-width: 300px;
+      flex-direction: column;
+   } 
+
+  /*  .pop-up__wrapp figure {
+      height: 200px;
+   } */
+   .pop-up__wrapp figure img {
+      width: 50%;
+   }
+
+   .product__features {
+      margin: 10px 0 0 0;
    }
 }
 @media screen and (max-width: 500px) {

@@ -171,7 +171,7 @@ function addToCartFormPopUp(id) {
                   <i class="bi bi-star-half"></i>
                </div>
                <p>${description}</p>
-               <p>Price: ${price} $</p>
+               <p><span>Price:</span> ${price} $</p>
                <div class="product__features--colors">
                   <p><span>Select Colors</span></p>
                   <div class="colors__wrapp">
@@ -205,8 +205,8 @@ let basket = JSON.parse(localStorage.getItem("shop-data")) || [];
 
 function getCartItems() {
    const cartItems = document.querySelector(".cart__items");
-   cartItems.innerText = basket.length;
-   //cartItems.innerText = basket.map(x => x.item).reduce((total, value) => total + value, 0 )
+  // cartItems.innerText = basket.length;
+   cartItems.innerText = basket.map(x => x.item).reduce((total, value) => total + value, 0 )
 }
 
 getCartItems()
@@ -229,7 +229,7 @@ function addProduct (id) {
    getCartItems();
    cartElements();
    getTotalPrice();
-   localStorage.setItem("shop-data", JSON.stringify(basket))
+   localStorage.setItem("shop-data", JSON.stringify(basket));
 }
 
 function decrementProduct (id) {
@@ -454,3 +454,4 @@ carousel.addEventListener("touchmove", dragging)
 //carousel.addEventListener("mouseup", dragStop)
 //carousel.addEventListener("mouseleave", dragStop)
 carousel.addEventListener("touchend", dragStop)
+
