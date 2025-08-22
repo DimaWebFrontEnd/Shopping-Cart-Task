@@ -143,7 +143,17 @@ function setSizes(n) {
 }
 
 function setColor(col) {
+   const colorsElements = document.querySelectorAll(".colors");
+   const checkedElem = document.createElement("i");
+   checkedElem.className = "bi bi-check-lg";
    color = col
+   console.log(colorsElements[0].children)
+
+   colorsElements.forEach(elem => {
+      elem.innerHTML = ``
+      colorsElements[col].innerHTML = `<i class="bi bi-check-lg"></i>`
+   })
+
 }
 
 
@@ -154,7 +164,7 @@ function addToCartFormPopUp(id) {
   
    popUpContent.innerHTML = addProductArr.map(value => {
       const {id, name, price, img, description, sizes } = value;
-      const sizesInHtml = document.querySelectorAll(".sizes__options");
+      //const sizesInHtml = document.querySelectorAll(".sizes__options");
       
       return `
             <i onClick="closePoUp()" class="bi bi-x-circle"></i>
@@ -175,7 +185,7 @@ function addToCartFormPopUp(id) {
                <div class="product__features--colors">
                   <p><span>Select Colors</span></p>
                   <div class="colors__wrapp">
-                     <div onClick="setColor(0)" class="colors" style="background-color: red;"></div>
+                     <div onClick="setColor(0)" class="colors" style="background-color: red;"><i class="bi bi-check-lg"></i></div>
                      <div onClick="setColor(1)" class="colors" style="background-color: green;"></div>
                      <div onClick="setColor(2)" class="colors" style="background-color: black;"></div>
                      <div onClick="setColor(3)" class="colors" style="background-color: white;"></div>

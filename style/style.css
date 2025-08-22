@@ -552,6 +552,9 @@ i:hover {
    border: 1px solid var(--light-gray);
    border-radius: 50%;
    margin: 5px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .colors:hover {
