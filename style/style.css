@@ -378,8 +378,14 @@ nav ul:hover .filter__products {
    scroll-behavior: smooth;
    scroll-snap-type: x mandatory;
    user-select: none;
+   scrollbar-width: none;
 }
 
+
+.carousel.dragging {
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
 .product__card {
    min-width: calc((100% / 3) - 20px);
    height: 100%;
@@ -391,6 +397,7 @@ nav ul:hover .filter__products {
    border-radius: 10px;
    margin-inline: 10px;
    scroll-snap-align: center;
+   /* scroll-snap-align: start; */
 }
 
 .product__card figure {
@@ -448,6 +455,7 @@ button:active {
    transition: all 0.3s ease-in-out;
    position: relative;
    padding: 10px;
+   margin: 10px;
    display: flex;
 }
 

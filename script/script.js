@@ -200,12 +200,16 @@ function addToCartFormPopUp(id) {
 
 /* Cart */
 
-let basket = [];
-const cartItems = document.querySelector(".cart__items");
+let basket = JSON.parse(localStorage.getItem("shop-data")) || [];
+
 
 function getCartItems() {
+   const cartItems = document.querySelector(".cart__items");
    cartItems.innerText = basket.length;
+   //cartItems.innerText = basket.map(x => x.item).reduce((total, value) => total + value, 0 )
 }
+
+getCartItems()
 
 function addProduct (id) {
    let selectedItem = id;
@@ -221,10 +225,11 @@ function addProduct (id) {
    } else {
       search.item += 1;
    }
-   
+   cartElements();
    getCartItems();
    cartElements();
-   getTotalPrice()
+   getTotalPrice();
+   localStorage.setItem("shop-data", JSON.stringify(basket))
 }
 
 function decrementProduct (id) {
@@ -237,17 +242,21 @@ function decrementProduct (id) {
       search.item -= 1;
    }
    basket = basket.filter((x) => x.item !== 0);
+   cartElements();
    getCartItems();
    cartElements();
-   getTotalPrice()
+   getTotalPrice();
+   localStorage.setItem("shop-data", JSON.stringify(basket));
 }
 
 const removeItem = (id) => {
    let selectedItem = id;
    basket = basket.filter((x) => x.id !== selectedItem);
+   cartElements();
    getCartItems();
    cartElements();
-   getTotalPrice()
+   getTotalPrice();
+   localStorage.setItem("shop-data", JSON.stringify(basket))
 }
 
 /* Shopping Cart Menu */
@@ -375,6 +384,7 @@ searchForm.addEventListener("submit", e => e.preventDefault());
 const arrows = document.querySelectorAll(".slider i");
 const card = document.querySelector(".product__card");
 const cardWidth = card.scrollWidth;
+
 let isDragStart = false;
 let isDragging = false;
 let prevPageX;
@@ -419,7 +429,7 @@ const dragging = (e) => {
    if (!isDragStart) return;
    e.preventDefault();
    isDragging = true;
-   //carousel.classList.add("dragging");
+   carousel.classList.add("dragging");
    positionDiff = (e.pageX || e.touches[0].pageX) - prevPageX;
    carousel.scrollLeft = prevScrollLeft - positionDiff;
    
@@ -427,7 +437,7 @@ const dragging = (e) => {
 
 const dragStop = () => {
    isDragStart = false;
-   //carousel.classList.remove("dragging");
+   carousel.classList.remove("dragging");
 
    if(!isDragging) return;
    isDragging = false;
@@ -435,12 +445,12 @@ const dragStop = () => {
 }
 
 
-carousel.addEventListener("mousedown", dragStart)
+//carousel.addEventListener("mousedown", dragStart)
 carousel.addEventListener("touchstart", dragStart)
 
-carousel.addEventListener("mousemove", dragging)
+//carousel.addEventListener("mousemove", dragging)
 carousel.addEventListener("touchmove", dragging)
 
-carousel.addEventListener("mouseup", dragStop)
+//carousel.addEventListener("mouseup", dragStop)
 //carousel.addEventListener("mouseleave", dragStop)
 carousel.addEventListener("touchend", dragStop)
