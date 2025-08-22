@@ -555,13 +555,17 @@ i:hover {
    display: flex;
    align-items: center;
    justify-content: center;
+   
 }
 
 .colors:hover {
    cursor: pointer;
+   transform: scale(110%);
 }
 
-
+.colors i {
+   color:hotpink;
+}
 
 .product__features--size p:first-child ,
 .product__features--colors p:first-child {

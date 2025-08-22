@@ -144,10 +144,7 @@ function setSizes(n) {
 
 function setColor(col) {
    const colorsElements = document.querySelectorAll(".colors");
-   const checkedElem = document.createElement("i");
-   checkedElem.className = "bi bi-check-lg";
    color = col
-   console.log(colorsElements[0].children)
 
    colorsElements.forEach(elem => {
       elem.innerHTML = ``
@@ -225,9 +222,13 @@ function addProduct (id) {
    let selectedItem = id;
    let search = basket.find((x) => x.id === selectedItem && x.color === color && x.size === size);
   
-    if (search === undefined) {
+   let selectedColor = color === 0 ? "red" : color === 1 ? "green" : color === 2 ? "black" : "white";
+   let selectedSize = size === 0 ? "Small" : size === 1 ? "Medium" : size === 2 ? "Large" : "X-large";
+
+    if (search === undefined) { 
       basket.push({
          id: selectedItem,
+         uniqeuId: id + selectedColor + selectedSize,
          color: color,
          size: size,
          item: 1
@@ -242,9 +243,36 @@ function addProduct (id) {
    localStorage.setItem("shop-data", JSON.stringify(basket));
 }
 
+function incrementProduct(id) {
+   let selectedItem = id;
+   let search = basket.find((x) => x.uniqeuId === selectedItem);
+   let selectedColor = color === 0 ? "red" : color === 1 ? "green" : color === 2 ? "black" : "white";
+   let selectedSize = size === 0 ? "Small" : size === 1 ? "Medium" : size === 2 ? "Large" : "X-large";
+
+    if (search === undefined) { 
+      basket.push({
+         id: selectedItem,
+         uniqeuId: id + selectedColor + selectedSize,
+         color: color,
+         size: size,
+         item: 1
+      })
+   } else {
+      search.item += 1;
+   }
+   cartElements();
+   getCartItems();
+   cartElements();
+   getTotalPrice();
+   localStorage.setItem("shop-data", JSON.stringify(basket));
+}
+
+
+
+
 function decrementProduct (id) {
    let selectedItem = id;
-   let search = basket.find((x) => x.id === selectedItem && x.color === color && x.size === size);
+   let search = basket.find((x) => x.uniqeuId === selectedItem);
   
    if (search === undefined) return;
    else if (search.item === 0) return;
@@ -261,7 +289,8 @@ function decrementProduct (id) {
 
 const removeItem = (id) => {
    let selectedItem = id;
-   basket = basket.filter((x) => x.id !== selectedItem);
+   basket = basket.filter((x) => x.uniqeuId !== selectedItem);
+   /* basket = basket.filter((x) => x.id !== selectedItem); */
    cartElements();
    getCartItems();
    cartElements();
@@ -289,8 +318,8 @@ window.addEventListener("click", (e) => {
 })
 
 function handleClick () {
-   shoppingMenu.classList.toggle("active")
-   document.body.style.overflow = shoppingMenu.className.includes("active") 
+   shoppingMenu.classList.toggle("active");
+   document.body.style.overflow = shoppingMenu.className.includes("active")
    ? "hidden" 
    : "auto";
    
@@ -302,13 +331,13 @@ closeElement.addEventListener("click", handleClick);
 function cartElements() {
    if (basket.length !== 0) {
       return (cart.innerHTML = basket.map(value => {
-         const { id, item, color, size } = value;
+         const { id, item, color, size, uniqeuId } = value;
          const search = products.find(x => x.id === id) || [];
          const { img, name, price} = search;
-
+         
          return `
             <div class="cart__container">
-               <div onClick="removeItem(${id})" class="trash"><i class="bi bi-trash3"></i></div>
+               <div onClick="removeItem('${uniqeuId}')" class="trash"><i class="bi bi-trash3"></i></div>
                <figure>
                   <img src=${img} alt=${name}>
                </figure>
@@ -333,9 +362,9 @@ function cartElements() {
                   <div class="cart__price">
                      <p>Price: ${price} $</p>
                      <div class="cart__price--items">
-                        <p><i onClick="decrementProduct(${id})" class="bi bi-dash-circle"></i></p>
+                        <p><i onClick="decrementProduct('${uniqeuId}')" class="bi bi-dash-circle"></i></p>
                         <p>${item}</p>
-                        <p><i onClick="addProduct(${id})" class="bi bi-plus-circle"></i></p>
+                        <p><i onClick="incrementProduct('${uniqeuId}')" class="bi bi-plus-circle"></i></p>
                      </div>
                   </div>
                </div>
