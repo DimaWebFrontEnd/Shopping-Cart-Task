@@ -161,7 +161,6 @@ function addToCartFormPopUp(id) {
   
    popUpContent.innerHTML = addProductArr.map(value => {
       const {id, name, price, img, description, sizes } = value;
-      //const sizesInHtml = document.querySelectorAll(".sizes__options");
       
       return `
             <i onClick="closePoUp()" class="bi bi-x-circle"></i>
@@ -212,7 +211,6 @@ let basket = JSON.parse(localStorage.getItem("shop-data")) || [];
 
 function getCartItems() {
    const cartItems = document.querySelector(".cart__items");
-  // cartItems.innerText = basket.length;
    cartItems.innerText = basket.map(x => x.item).reduce((total, value) => total + value, 0 )
 }
 
@@ -422,8 +420,7 @@ searchForm.addEventListener("submit", e => e.preventDefault());
 
 const arrows = document.querySelectorAll(".slider i");
 const cards = document.querySelectorAll(".product__card");
-/* const cardWidth = card.scrollWidth; */
-const cardWidth = cards[0].scrollWidth;
+const cardWidth = cards[0].offsetWidth;
 
 let isDragStart = false;
 let isDragging = false;
