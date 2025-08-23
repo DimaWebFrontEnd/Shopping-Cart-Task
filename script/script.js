@@ -478,7 +478,6 @@ const dragging = (e) => {
 const dragStop = () => {
    isDragStart = false;
    carousel.classList.remove("dragging");
-
    if(!isDragging) return;
    isDragging = false;
    
