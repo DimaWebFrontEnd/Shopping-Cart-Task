@@ -421,8 +421,9 @@ searchForm.addEventListener("submit", e => e.preventDefault());
 /* Carousel */
 
 const arrows = document.querySelectorAll(".slider i");
-const card = document.querySelector(".product__card");
-const cardWidth = card.scrollWidth;
+const cards = document.querySelectorAll(".product__card");
+/* const cardWidth = card.scrollWidth; */
+const cardWidth = cards[0].scrollWidth;
 
 let isDragStart = false;
 let isDragging = false;
@@ -484,13 +485,13 @@ const dragStop = () => {
 }
 
 
-//carousel.addEventListener("mousedown", dragStart)
+carousel.addEventListener("mousedown", dragStart)
 carousel.addEventListener("touchstart", dragStart)
 
-//carousel.addEventListener("mousemove", dragging)
+carousel.addEventListener("mousemove", dragging)
 carousel.addEventListener("touchmove", dragging)
 
-//carousel.addEventListener("mouseup", dragStop)
-//carousel.addEventListener("mouseleave", dragStop)
+carousel.addEventListener("mouseup", dragStop)
+carousel.addEventListener("mouseleave", dragStop)
 carousel.addEventListener("touchend", dragStop)
 

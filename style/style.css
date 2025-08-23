@@ -13,7 +13,13 @@
    --dark-on-menu: rgba(0, 0, 0, 0.519);
 }
 
-html{ scroll-behavior: smooth; }
+html { 
+    -webkit-scroll-behavior: smooth; 
+    -moz-scroll-behavior: smooth;
+    -ms-scroll-behavior: smooth;
+    -o-scroll-behavior: smooth;
+    scroll-behavior: smooth;
+}
 
 body {
    font-family: Verdana, Helvetica, Arial, sans-serif;
@@ -374,6 +380,10 @@ nav ul:hover .filter__products {
    height: 500px;
    display: flex;
    overflow-x: hidden;
+   -webkit-scroll-behavior: smooth; 
+    -moz-scroll-behavior: smooth;
+    -ms-scroll-behavior: smooth;
+    -o-scroll-behavior: smooth;
    scroll-behavior: smooth;
    scroll-snap-type: x mandatory;
    user-select: none;
@@ -396,17 +406,23 @@ nav ul:hover .filter__products {
    border-radius: 10px;
    margin-inline: 10px;
    scroll-snap-align: center;
-   /* scroll-snap-align: start; */
+   scroll-snap-stop: always;
+   /* scroll-snap-align: start;
+   scroll-snap-align: end; */
+   user-select: none;
 }
 
 .product__card figure {
    width: 90%;
    margin-inline: auto;
+   user-select: none;
 }
 .product__card figure img {
    display: block;
    width: 100%;
    height: auto;
+   user-select: none;
+   pointer-events: none;
 }
 
 
@@ -681,7 +697,7 @@ i:hover {
    border: 1px solid var(--light-gray);
    border-radius: 10px;
    display: flex;
-   font-size: 0.7rem;
+   font-size: 0.8rem;
    position: relative;
    user-select: none;
 }
@@ -827,9 +843,17 @@ footer {
       font-size: 0.9rem;
    }
 
+   .carousel {
+      scroll-padding-inline-start: 10px;
+   }
+
    .product__card {
       min-width: calc((100% / 2) - 20px);
+      scroll-snap-align: start;
+   
    }
+
+   
 
    .prizes {
       flex-wrap: wrap;
@@ -909,15 +933,18 @@ footer {
    }
 
   .prizes__card {
-      
       width: calc((100% / 2) - 10px);
    }
 }
 
 @media screen and (max-width: 450px) {
     /* Main */
+   .carousel {
+      scroll-padding-inline-start: 0;
+   }
    .product__card {
       min-width: calc(100% - 20px);
+      scroll-snap-align: center;
    }
    .product__card figure {
       width: 60%;
